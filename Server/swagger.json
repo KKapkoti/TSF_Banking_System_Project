@@ -1,0 +1,199 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Node.js API with Swagger",
+      "version": "1.0.0",
+      "description": "Documentation for Node.js API with Swagger"
+    },
+
+    "tags": [
+        {
+          "name": "Users",
+          "description": "User operations"
+        },
+        {
+          "name": "Transactions",
+          "description": "Transaction operations"
+        }
+      ],
+    
+    "paths": {
+      "/api/users": {
+        "get": {
+          "summary": "Get all users",
+          "tags": ["Users"],
+          "responses": {
+            "200": {
+              "description": "Successful response with user list"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new user",
+          "tags": ["Users"],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful response with created user"
+            },
+            "400": {
+              "description": "Bad request, user with the same ID already exists"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/api/users/{id}": {
+        "delete": {
+          "summary": "Delete a user by ID",
+          "tags": ["Users"],
+          "parameters": [
+            {
+              "in": "path",
+              "id": "name",
+              "required": true,
+              "description": "ID of the user to delete",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response with deleted user"
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/api/users/{username}": {
+      "get": {
+        "summary": "Get User by username",
+        "tags": ["Users"],
+        "parameters": [
+            {
+              "in": "path",
+              "name": "username",
+              "required": true,
+              "description": "Usename of the user to retrieve",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+        "responses": {
+          "200": {
+            "description": "Successful response with user list"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+      },
+      "/api/transaction-history": {
+        "get": {
+            "summary": "Get all Transactions",
+            "tags": ["Transactions"],
+            "responses": {
+              "200": {
+                "description": "Successful response with user list"
+              },
+              "500": {
+                "description": "Internal server error"
+              }
+            }
+          }
+        },
+        "/api/transaction": {
+            "post": {
+              "summary": "Make a transaction",
+              "tags": ["Transactions"],
+              "requestBody": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Transactions"
+                    }
+                  }
+                }
+              },
+              "responses":{
+              "200": {
+                "description": "Successful response with created user"
+              },
+          "400": {
+            "description": "Bad request, insufficient balance or user not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }}
+        }
+      }
+    },
+
+
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "username": {
+              "type": "string"
+            },
+            "balance": {
+              "type": "number"
+            },
+            "email": {
+                "type":"String"
+            },
+            "account_no": {
+                "type":"String"
+            },
+            "password":{
+                "type":"String"
+            }
+          }
+        },
+        "Transactions": {
+            "type": "object",
+            "properties": {
+                "SenderName": {
+                    "type": "String"
+                    },
+                    "ReceiverName": { 
+                        "type": "String"
+                    },
+    
+                "Amount": {
+                   "type": "number"
+                }
+            }
+        }
+
+
+
+      }
+    }
+  }
